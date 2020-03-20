@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/fuguefoundation/dapp-nonprofit/blob/master/src/assets/images/logo_150.png">
+</p>
+
 ### Install
 
 ```
@@ -13,9 +17,11 @@ Truffle comes bundled with a local development blockchain server that launches a
 +  [ganache-cli](https://github.com/trufflesuite/ganache-cli): a command-line version of Truffle's blockchain server.
 +  [ganache](https://truffleframework.com/ganache/): A GUI for the server that displays your transaction history and chain state.
 
-# TODO
+## Contributing to the project
 
-1. NFT contract
-2. Payment Split contract
-3. Tests
-4. Integrate with frontend
+This is an open source project. Contributions are welcomed & encouraged! :smile: If you'd like to improve the code base, please see [Contributing Guidelines](CONTRIBUTE.md).
+
+## References
+* [Ethereum](https://ethereum.org/)
+* [Truffle](http://truffleframework.com/docs/)
+* [Open Zeppelin](https://docs.openzeppelin.com/openzeppelin/)
