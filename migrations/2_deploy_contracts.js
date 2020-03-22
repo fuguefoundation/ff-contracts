@@ -7,7 +7,7 @@ const payees = [
     "0x79E0A49Bb424Ea66bada063d909a8AaCd1b12aB9",
     "0xD1466BfF24fEcae1D541D8FDd75a644686Aff976"
 ]
-const shares = [3, 2, 1]
+const shares = [3, 2, 1];
 
 module.exports = function(deployer, network) {
 
