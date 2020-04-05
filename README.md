@@ -2,20 +2,21 @@
   <img src="https://github.com/fuguefoundation/dapp-nonprofit/blob/master/src/assets/images/logo_150.png">
 </p>
 
-### Install
+## Quick Start
 
-```
-$ npm install -g truffle
-```
+1. Install Truffle: `npm install -g truffle` - [Docs](https://www.trufflesuite.com/docs/truffle/quickstart)
+2. Clone repo and run `npm install`
+3. Create an `app.env` file to store private variables (see `truffle-config.js` file). This is only necessary for development to a live testnet such as Goerli or Ropsten.
+4. You will need to connect to a blockchain and Truffle provides different options, such as [Ganache](https://www.trufflesuite.com/docs/ganache/quickstart).
+5. Run `truffle compile`, `truffle migrate` and `truffle test` to compile your contracts, deploy those contracts to the network, and run their associated unit tests. Truffle comes bundled with a local development blockchain server that launches automatically when you invoke the commands  above. You can interact with the contracts with `truffle console`.
 
-### Quick Usage
+## About
 
-From there, you can run `truffle compile`, `truffle migrate` and `truffle test` to compile your contracts, deploy those contracts to the network, and run their associated unit tests.
+Ultimately these contracts will be incorporated into a decentralized application currently being developed in a [separate repo](https://github.com/fuguefoundation/ff-dapp).
 
-Truffle comes bundled with a local development blockchain server that launches automatically when you invoke the commands  above. If you'd like to [configure a more advanced development environment](https://truffleframework.com/docs/advanced/configuration) we recommend you install the blockchain server separately by running `npm install -g ganache-cli` at the command line.
-
-+  [ganache-cli](https://github.com/trufflesuite/ganache-cli): a command-line version of Truffle's blockchain server.
-+  [ganache](https://truffleframework.com/ganache/): A GUI for the server that displays your transaction history and chain state.
+<p align="center">
+  <img src="https://github.com/fuguefoundation/ff-dapp/blob/master/src/assets/images/ff-dapp-flow.jpg">
+</p>
 
 ## Contributing to the project
 
