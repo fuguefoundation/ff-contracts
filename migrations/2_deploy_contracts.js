@@ -4,9 +4,9 @@ const FFPaymentSplit = artifacts.require("FFPaymentSplit");
 const name = "FugueFoundation";
 const symbol = "FF";
 const payees = [
-    "0x4B4FA37e6aD03d46894E5a96dAe7D2d88772C7f5",
-    "0x79E0A49Bb424Ea66bada063d909a8AaCd1b12aB9",
-    "0xD1466BfF24fEcae1D541D8FDd75a644686Aff976"
+    "0x1356902d01d78714aa336f90099760ceaa3dbea4",
+    "0x6526713b350083ac5812c837591d8456c5e64db6",
+    "0xdc8f54f98f828da9e7ae30de176bc4108cd94599"
 ]
 const shares = [3, 2, 1];
 
