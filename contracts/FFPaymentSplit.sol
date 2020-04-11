@@ -11,7 +11,7 @@ contract IFFKudos {
 
 contract FFPaymentSplit is PaymentSplitter {
 
-    event OrgGroupAdded(uint id);
+    event EvaluatorAdded(uint id);
     event DonationReceived(uint donationId, address indexed donor, uint amount);
 
     // OZ counter control
@@ -31,20 +31,22 @@ contract FFPaymentSplit is PaymentSplitter {
 
     // Address of NFT contract and tokenURI link
     IFFKudos private _ffKudosInterface;
-    uint256 private _tokenId;
+    uint256 public tokenId;
+    address public tokenAddress;
 
-    // Arrays of structs for each donation given and org added
-    Org[] private orgs;
+    // Arrays of structs for each donation given and evaluator added
+    Evaluator[] private evaluators;
     Donation[] private donations;
 
     struct Org {
         address addr;
-        uint share;
+        string name;
         uint id;
     }
 
-    struct OrgGroup {
+    struct Evaluator {
         uint id;
+        string name;
         Org[] orgs;
     }
 
@@ -52,7 +54,7 @@ contract FFPaymentSplit is PaymentSplitter {
         uint id;
         uint amount;
         address from;
-        OrgGroup group;
+        Evaluator evaluator;
     }
 
     constructor(address[] memory _payees, uint256[] memory _shares)
@@ -69,30 +71,39 @@ contract FFPaymentSplit is PaymentSplitter {
      * @param addr The address of the NFT contract.
      */
 
-    function setNFTDetails(address payable addr, uint256 tokenId) public {
+    function setNFTDetails(address payable addr, uint256 id) public {
         require(_admin.has(msg.sender), "DOES_NOT_HAVE_ADMIN_ROLE");
         require(addr != address(0), "FFPaymentSplitter: NFT contract is a zero address");
         _ffKudosInterface = IFFKudos(addr);
-        _tokenId = tokenId;
+        tokenAddress = addr;
+        tokenId = id;
     }
 
     /**
-     * @dev Allow admin role to add group
+     * @dev Allow admin role to add evaluator
      */
 
-    // function addGroup() public {
+    // function addEvaluator() public {
     // }
 
     /**
-     * @dev Donate and split funds among payees, msg.sender receives NFT
+     * @dev Allow admin role to add orgs. Orgs are assigned to an Evaluator.
      */
 
-    function donate() public payable {
-        require(address(_ffKudosInterface) != address(0), "FFPaymentSplitter: NFT contract is a zero address");
+    // function addOrgs() public {
+    // }
+
+    /**
+     * @dev Donation funds are split among payees, msg.sender receives NFT
+     */
+
+    function() external payable {
+        require(address(_ffKudosInterface) != address(0), "FFPaymentSplitter: NFT contract is not set");
         _donationIds.increment();
         uint256 newDonationId = _donationIds.current();
 
-        _ffKudosInterface.clone(msg.sender, _tokenId, 0);
+        //_ffKudosInterface.clone(msg.sender, tokenId, 0);
+        totalInput += msg.value;
         emit DonationReceived(newDonationId, msg.sender, msg.value);
     }
 
