@@ -23,6 +23,7 @@ Ultimately these contracts will be incorporated into a decentralized application
 This is an open source project. Contributions are welcomed & encouraged! :smile: If you'd like to improve the code base, please see [Contributing Guidelines](CONTRIBUTE.md).
 
 ## References
+* [Kudos NFT](https://github.com/gitcoinco/Kudos721Contract)
 * [Ethereum](https://ethereum.org/)
 * [Truffle](http://truffleframework.com/docs/)
 * [Open Zeppelin](https://docs.openzeppelin.com/openzeppelin/)
