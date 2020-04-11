@@ -3,7 +3,11 @@ pragma solidity ^0.5.0;
 import "@openzeppelin/contracts/access/Roles.sol";
 import "@openzeppelin/contracts/payment/PaymentSplitter.sol";
 import "@openzeppelin/contracts/drafts/Counters.sol";
-import "./XFFToken.sol";
+
+contract IFFKudos {
+    function clone(address _to, uint256 _tokenId, uint256 _numClonesRequested) external view;
+    function() external payable { }
+}
 
 contract FFPaymentSplit is PaymentSplitter {
 
@@ -26,8 +30,8 @@ contract FFPaymentSplit is PaymentSplitter {
     uint public totalInput;
 
     // Address of NFT contract and tokenURI link
-    address private nftContractAddr;
-    string private _tokenURI = "https://fuguefoundation.org/token";
+    IFFKudos private _ffKudosInterface;
+    uint256 private _tokenId;
 
     // Arrays of structs for each donation given and org added
     Org[] private orgs;
@@ -65,10 +69,11 @@ contract FFPaymentSplit is PaymentSplitter {
      * @param addr The address of the NFT contract.
      */
 
-    function setNFTContractAddr(address addr) public {
+    function setNFTDetails(address payable addr, uint256 tokenId) public {
         require(_admin.has(msg.sender), "DOES_NOT_HAVE_ADMIN_ROLE");
         require(addr != address(0), "FFPaymentSplitter: NFT contract is a zero address");
-        nftContractAddr = addr;
+        _ffKudosInterface = IFFKudos(addr);
+        _tokenId = tokenId;
     }
 
     /**
@@ -83,12 +88,11 @@ contract FFPaymentSplit is PaymentSplitter {
      */
 
     function donate() public payable {
-        require(nftContractAddr != address(0), "FFPaymentSplitter: NFT contract is a zero address");
+        require(address(_ffKudosInterface) != address(0), "FFPaymentSplitter: NFT contract is a zero address");
         _donationIds.increment();
         uint256 newDonationId = _donationIds.current();
 
-        XFFToken t = XFFToken(nftContractAddr);
-        t.grantToken(msg.sender, _tokenURI);
+        _ffKudosInterface.clone(msg.sender, _tokenId, 0);
         emit DonationReceived(newDonationId, msg.sender, msg.value);
     }
 
