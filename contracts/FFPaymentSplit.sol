@@ -12,7 +12,7 @@ contract IFFKudos {
 
 contract FFPaymentSplit is PaymentSplitter {
 
-    event DonationReceived(uint donationId, address indexed donor, uint amount, uint evaluator);
+    event DonationReceived(uint donationId, address indexed donor, uint amount, bytes evaluator);
 
     // OZ counter control
     using Counters for Counters.Counter;
