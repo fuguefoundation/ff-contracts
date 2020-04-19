@@ -66,13 +66,17 @@ contract FFPaymentSplit is PaymentSplitter {
         }
     }
 
+    modifier onlyAdmin() {
+        require(_admin.has(msg.sender), "DOES_NOT_HAVE_ADMIN_ROLE");
+        _;
+    }
+
     /**
      * @dev Set NFT contract address
      * @param addr The address of the NFT contract.
      */
 
-    function setNFTDetails(address payable addr, uint256 id) public {
-        require(_admin.has(msg.sender), "DOES_NOT_HAVE_ADMIN_ROLE");
+    function setNFTDetails(address payable addr, uint256 id) public onlyAdmin {
         require(addr != address(0), "FFPaymentSplitter: NFT contract is a zero address");
         _ffKudosInterface = IFFKudos(addr);
         tokenAddress = addr;
@@ -107,8 +111,7 @@ contract FFPaymentSplit is PaymentSplitter {
         emit DonationReceived(newDonationId, msg.sender, msg.value, msg.data);
     }
 
-    function terminate() public {
-        require(_admin.has(msg.sender), "DOES_NOT_HAVE_ADMIN_ROLE");
+    function terminate() public onlyAdmin {
         selfdestruct(address(msg.sender));
     }
 
