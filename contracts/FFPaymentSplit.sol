@@ -4,6 +4,7 @@ import "@openzeppelin/contracts/access/Roles.sol";
 import "@openzeppelin/contracts/payment/PaymentSplitter.sol";
 import "@openzeppelin/contracts/drafts/Counters.sol";
 
+// Interface to expose NFT clone in FFKudos
 contract IFFKudos {
     function clone(address _to, uint256 _tokenId, uint256 _numClonesRequested) external view;
     function() external payable { }
@@ -11,8 +12,7 @@ contract IFFKudos {
 
 contract FFPaymentSplit is PaymentSplitter {
 
-    event EvaluatorAdded(uint id);
-    event DonationReceived(uint donationId, address indexed donor, uint amount);
+    event DonationReceived(uint donationId, address indexed donor, uint amount, uint evaluator);
 
     // OZ counter control
     using Counters for Counters.Counter;
@@ -94,7 +94,7 @@ contract FFPaymentSplit is PaymentSplitter {
     // }
 
     /**
-     * @dev Donation funds are split among payees, msg.sender receives NFT
+     * @dev Donation funds are split among payees, msg.sender receives NFT clone
      */
 
     function() external payable {
@@ -104,7 +104,7 @@ contract FFPaymentSplit is PaymentSplitter {
 
         //_ffKudosInterface.clone(msg.sender, tokenId, 0);
         totalInput += msg.value;
-        emit DonationReceived(newDonationId, msg.sender, msg.value);
+        emit DonationReceived(newDonationId, msg.sender, msg.value, msg.data);
     }
 
     function terminate() public {
