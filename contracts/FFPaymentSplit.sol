@@ -6,8 +6,7 @@ import "@openzeppelin/contracts/drafts/Counters.sol";
 
 // Interface to expose NFT clone in FFKudos
 contract IFFKudos {
-    function clone(address _to, uint256 _tokenId, uint256 _numClonesRequested) external view;
-    function() external payable { }
+    function clone(address _to, uint256 _tokenId, uint256 _numClonesRequested) public payable;
 }
 
 contract FFPaymentSplit is PaymentSplitter {
@@ -25,9 +24,6 @@ contract FFPaymentSplit is PaymentSplitter {
 
     // Mapping between addresses and how much money they have withdrawn.
     mapping(address => uint) public amountsWithdrew;
-
-    // The total amount of funds which has been deposited into the contract.
-    uint public totalInput;
 
     // Address of NFT contract and tokenURI link
     IFFKudos private _ffKudosInterface;
@@ -58,8 +54,9 @@ contract FFPaymentSplit is PaymentSplitter {
     }
 
     constructor(address[] memory _payees, uint256[] memory _shares)
-    PaymentSplitter(_payees, _shares)
-        public payable {
+        PaymentSplitter(_payees, _shares)
+        public payable
+    {
         _admin.add(msg.sender);
         for (uint256 i = 0; i < _payees.length; ++i) {
             _orgs.add(_payees[i]);
@@ -102,13 +99,15 @@ contract FFPaymentSplit is PaymentSplitter {
      */
 
     function() external payable {
-        require(address(_ffKudosInterface) != address(0), "FFPaymentSplitter: NFT contract is not set");
-        _donationIds.increment();
-        uint256 newDonationId = _donationIds.current();
+        // Check is required here to prevent reentrancy from the Kudos contract
+        if (msg.sender != address(_ffKudosInterface)) {
+            require(address(_ffKudosInterface) != address(0), "FFPaymentSplitter: NFT contract is not set");
+            _donationIds.increment();
+            uint256 newDonationId = _donationIds.current();
 
-        //_ffKudosInterface.clone(msg.sender, tokenId, 0);
-        totalInput += msg.value;
-        emit DonationReceived(newDonationId, msg.sender, msg.value, msg.data);
+            _ffKudosInterface.clone(msg.sender, tokenId, 1);
+            emit DonationReceived(newDonationId, msg.sender, msg.value, msg.data);
+        }
     }
 
     function terminate() public onlyAdmin {
