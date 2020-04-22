@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 import "@openzeppelin/contracts/access/Roles.sol";
-import "@openzeppelin/contracts/payment/PaymentSplitter.sol";
+import "./PaymentSplitter.sol";
 import "@openzeppelin/contracts/drafts/Counters.sol";
 
 // Interface to expose NFT clone in FFKudos
@@ -20,7 +20,6 @@ contract FFPaymentSplit is PaymentSplitter {
     // OZ access control
     using Roles for Roles.Role;
     Roles.Role private _admin;
-    Roles.Role private _orgs;
 
     // Mapping between addresses and how much money they have withdrawn.
     mapping(address => uint) public amountsWithdrew;
@@ -30,16 +29,9 @@ contract FFPaymentSplit is PaymentSplitter {
     uint256 public tokenId;
     address public tokenAddress;
 
-    // Arrays of structs for each donation given and evaluator added
-    Org[] private orgs;
+    // Arrays of structs for each donation given
     Donation[] private donations;
     uint private totalDonated;
-
-    struct Org {
-        address addr;
-        uint id;
-        uint evaluatorId;
-    }
 
     struct Donation {
         uint id;
@@ -48,14 +40,11 @@ contract FFPaymentSplit is PaymentSplitter {
         address from;
     }
 
-    constructor(address[] memory _payees, uint256[] memory _shares)
-        PaymentSplitter(_payees, _shares)
+    constructor(address[] memory _payees, uint256[] memory _shares, uint[] memory _evalId)
+        PaymentSplitter(_payees, _shares, _evalId)
         public payable
     {
         _admin.add(msg.sender);
-        for (uint256 i = 0; i < _payees.length; ++i) {
-            _orgs.add(_payees[i]);
-        }
     }
 
     modifier onlyAdmin() {
@@ -74,21 +63,6 @@ contract FFPaymentSplit is PaymentSplitter {
         tokenAddress = addr;
         tokenId = id;
     }
-
-    /**
-     * @dev Allow admin role to add an organization.
-     */
-
-    // function addOrg() public onlyAdmin{
-    // }
-
-    /**
-     * @dev Allow admin role to remove an organization.
-     * @param id Org id
-     */
-
-    // function removeOrg(id) public onlyAdmin{
-    // }
 
     /**
      * @dev Donation funds are split among payees, msg.sender receives NFT clone
