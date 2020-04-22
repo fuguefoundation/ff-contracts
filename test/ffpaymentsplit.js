@@ -6,7 +6,7 @@ contract("FFPaymentSplit", async (accounts) => {
   let kudosInstance;
 
   beforeEach(async () => {
-    ffPaymentInstance = await FFPaymentSplit.new([accounts[4], accounts[5], accounts[6]], [1, 1 , 1]);
+    ffPaymentInstance = await FFPaymentSplit.new([accounts[4], accounts[5], accounts[6]], [1, 1 , 1], [1, 2, 3]);
     kudosInstance = await FFKudos.new("TestFugue", "TF");
     await kudosInstance.mint(kudosInstance.address, 0, 1337, "foo");
     await kudosInstance.setCloneFeePercentage(0);
