@@ -9,6 +9,7 @@ const payees = [
     "0xdc8f54f98f828da9e7ae30de176bc4108cd94599"
 ]
 const shares = [1, 1, 1];
+const evalId = [1, 2, 3];
 
 module.exports = function(deployer, network) {
 
@@ -27,5 +28,5 @@ module.exports = function(deployer, network) {
     console.log(`${"-".repeat(30)}
     DEPLOYING FFPaymentSplit Contract...\n`);
 
-    deployer.deploy(FFPaymentSplit, payees, shares);
+    deployer.deploy(FFPaymentSplit, payees, shares, evalId);
 };
