@@ -31,26 +31,21 @@ contract FFPaymentSplit is PaymentSplitter {
     address public tokenAddress;
 
     // Arrays of structs for each donation given and evaluator added
-    Evaluator[] private evaluators;
+    Org[] private orgs;
     Donation[] private donations;
+    uint private totalDonated;
 
     struct Org {
         address addr;
-        string name;
         uint id;
-    }
-
-    struct Evaluator {
-        uint id;
-        string name;
-        Org[] orgs;
+        uint evaluatorId;
     }
 
     struct Donation {
         uint id;
+        uint evaluatorId;
         uint amount;
         address from;
-        Evaluator evaluator;
     }
 
     constructor(address[] memory _payees, uint256[] memory _shares)
@@ -81,17 +76,18 @@ contract FFPaymentSplit is PaymentSplitter {
     }
 
     /**
-     * @dev Allow admin role to add evaluator
+     * @dev Allow admin role to add an organization.
      */
 
-    // function addEvaluator() public {
+    // function addOrg() public onlyAdmin{
     // }
 
     /**
-     * @dev Allow admin role to add orgs. Orgs are assigned to an Evaluator.
+     * @dev Allow admin role to remove an organization.
+     * @param id Org id
      */
 
-    // function addOrgs() public {
+    // function removeOrg(id) public onlyAdmin{
     // }
 
     /**
@@ -106,6 +102,7 @@ contract FFPaymentSplit is PaymentSplitter {
             uint256 newDonationId = _donationIds.current();
 
             _ffKudosInterface.clone(msg.sender, tokenId, 1);
+            totalDonated += msg.value;
             emit DonationReceived(newDonationId, msg.sender, msg.value, msg.data);
         }
     }
