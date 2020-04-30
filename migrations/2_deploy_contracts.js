@@ -8,7 +8,9 @@ const payees = [
     "0x6526713b350083ac5812c837591d8456c5e64db6",
     "0xdc8f54f98f828da9e7ae30de176bc4108cd94599"
 ]
-const shares = [1, 1, 1];
+
+// FIXME: Use the correct evaluator ID for the payees above!
+const evaluatorIds = [1, 1, 1];
 
 module.exports = function(deployer, network) {
 
@@ -27,5 +29,5 @@ module.exports = function(deployer, network) {
     console.log(`${"-".repeat(30)}
     DEPLOYING FFPaymentSplit Contract...\n`);
 
-    deployer.deploy(FFPaymentSplit, payees, shares);
+    deployer.deploy(FFPaymentSplit, payees, evaluatorIds);
 };
