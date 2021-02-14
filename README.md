@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/fuguefoundation/ff-contracts)
+
 <p align="center">
   <img src="https://github.com/fuguefoundation/dapp-nonprofit/blob/master/src/assets/images/logo_150.png">
 </p>
@@ -22,6 +24,10 @@ Ultimately these smart contracts will be incorporated into a decentralized appli
 ## Contributing to the project
 
 This is an open source project. Contributions are welcomed & encouraged! :smile: If you'd like to improve the code base, please see [Contributing Guidelines](CONTRIBUTE.md).
+
+## Change Log
+
+See [CHANGELOG](./CHANGELOG.md) for details.
 
 ## References
 * [Kudos NFT](https://github.com/gitcoinco/Kudos721Contract)

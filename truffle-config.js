@@ -1,9 +1,9 @@
-// Create file in root dir (e.g., app.env) to include env variables
+// Create file in root dir (.env) to include env variables
 require('dotenv').config();
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 var mnemonic = process.env.SEED;
-var infura = "https://goerli.infura.io/v3/" + process.env.INFURA_KEY;
+var infura = "https://goerli.infura.io/v3/" + process.env.INFURA_PROJECT_ID;
 
 module.exports = {
   networks: {
@@ -22,13 +22,13 @@ module.exports = {
        return new HDWalletProvider(mnemonic, infura)
      },
      network_id: 5,
-   //   gas : 6700000,
-   //   gasPrice : 10000000000
+     gas : 7721975, //default: 6721975
+     gasPrice : 200000000000 //default: 100000000000
    }           
   },
   compilers: {
       solc: {
-          version: "^0.5.5"
+          version: "^0.6.0"
       }
   }
 };

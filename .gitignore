@@ -8,6 +8,7 @@
 /misc
 package-lock.json
 app.env
+.env
 
 # dependencies
 /node_modules
@@ -42,6 +43,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+notes.md
 
 # System Files
 .DS_Store

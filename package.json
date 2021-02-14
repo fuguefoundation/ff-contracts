@@ -1,7 +1,7 @@
 {
-  "name": "truffle",
+  "name": "ff-contracts",
   "version": "1.0.0",
-  "description": "",
+  "description": "Ethereum smart contracts for FF donation platform",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -10,11 +10,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Fugue Foundation",
   "license": "ISC",
   "dependencies": {
-    "@openzeppelin/contracts": "^2.5.0",
-    "@truffle/hdwallet-provider": "^1.0.33",
+    "@openzeppelin/contracts": "^3.0.1",
+    "@truffle/hdwallet-provider": "^1.0.35",
     "dotenv": "^8.2.0"
   }
 }
